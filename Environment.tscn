@@ -1,0 +1,159 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Food.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Entity.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Environment.gd" type="Script" id=3]
+[ext_resource path="res://block.png" type="Texture" id=4]
+
+[sub_resource type="Environment" id=3]
+glow_enabled = true
+glow_intensity = 1.5
+glow_strength = 1.3
+glow_blend_mode = 0
+glow_hdr_threshold = 0.9
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.203922, 0.203922, 0.203922, 0.8 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+content_margin_left = 0.0
+content_margin_right = 0.0
+content_margin_top = 0.0
+content_margin_bottom = 0.0
+bg_color = Color( 0.113725, 0.117647, 0.0588235, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.321569, 0.305882, 0.305882, 1 )
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+expand_margin_left = 3.0
+expand_margin_top = 3.0
+shadow_color = Color( 0.0588235, 0.0235294, 0.0941176, 0.894118 )
+shadow_size = 2
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 13, 302 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 400.75, 13 )
+
+[node name="Environment" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="."]
+self_modulate = Color( 0, 0.25098, 0.321569, 1 )
+show_behind_parent = true
+position = Vector2( 400, 300 )
+scale = Vector2( 26, 19.75 )
+texture = ExtResource( 4 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 3 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 20
+
+[node name="FpsCounter" type="Label" parent="CanvasLayer"]
+margin_left = 732.0
+margin_top = 4.0
+margin_right = 794.0
+margin_bottom = 29.0
+text = "FPS: "
+valign = 1
+
+[node name="PopCounter" type="Label" parent="CanvasLayer"]
+margin_left = 732.0
+margin_top = 23.0
+margin_right = 794.0
+margin_bottom = 48.0
+text = "N: "
+valign = 1
+
+[node name="FoodCounter" type="Label" parent="CanvasLayer"]
+margin_left = 732.0
+margin_top = 43.0
+margin_right = 794.0
+margin_bottom = 68.0
+text = "R: "
+valign = 1
+
+[node name="PopupMenu" type="PopupMenu" parent="CanvasLayer"]
+margin_left = 272.0
+margin_top = 120.0
+margin_right = 392.0
+margin_bottom = 168.0
+mouse_default_cursor_shape = 2
+custom_colors/font_color_hover = Color( 0.231373, 0.729412, 0.278431, 1 )
+custom_styles/hover = SubResource( 5 )
+custom_styles/panel = SubResource( 4 )
+items = [ "Make Food", null, 0, false, false, 0, 0, null, "", false, "Make Babies", null, 0, false, false, 1, 0, null, "", false ]
+submenu_popup_delay = 0.2
+
+[node name="WestWall" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WestWall"]
+position = Vector2( -13, 302 )
+shape = SubResource( 1 )
+
+[node name="EastWall" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EastWall"]
+position = Vector2( 813, 302 )
+shape = SubResource( 1 )
+
+[node name="NorthWall" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NorthWall"]
+position = Vector2( 400, -13 )
+shape = SubResource( 2 )
+
+[node name="SouthWall" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SouthWall"]
+position = Vector2( 400, 613 )
+shape = SubResource( 2 )
+
+[node name="Food" parent="." instance=ExtResource( 1 )]
+position = Vector2( 133, 64 )
+
+[node name="Food7" parent="." instance=ExtResource( 1 )]
+position = Vector2( 160, 144 )
+
+[node name="Food8" parent="." instance=ExtResource( 1 )]
+position = Vector2( 48, 152 )
+
+[node name="Food9" parent="." instance=ExtResource( 1 )]
+position = Vector2( 176, 16 )
+
+[node name="Food3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 208, 99 )
+
+[node name="Food4" parent="." instance=ExtResource( 1 )]
+position = Vector2( 96, 32 )
+
+[node name="Food5" parent="." instance=ExtResource( 1 )]
+position = Vector2( 112, 152 )
+
+[node name="Food6" parent="." instance=ExtResource( 1 )]
+position = Vector2( 64, 216 )
+
+[node name="Food2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 248, 40 )
+
+[node name="FoodClock" type="Timer" parent="."]
+wait_time = 0.3
+autostart = true
+
+[node name="Entity" parent="." instance=ExtResource( 2 )]
+position = Vector2( 93, 96 )
+
+[node name="Entity2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 632, 448 )
+
+[connection signal="gui_input" from="CanvasLayer/PopupMenu" to="." method="_on_PopupMenu_gui_input"]
+[connection signal="index_pressed" from="CanvasLayer/PopupMenu" to="." method="_on_PopupMenu_index_pressed"]
+[connection signal="timeout" from="FoodClock" to="." method="_on_FoodClock_timeout"]
